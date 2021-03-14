@@ -9,17 +9,17 @@ const ALLHIKINGTRAILS = "All Hiking Trails"
 
 class App extends Component {
   state = {
-    names: [],
-    sel_name: "",
-    data: [],
-    filteredData: []
+    trailnames: [],
+    sel_trailname: "",
+    traildata: [],
+    filteredtrailData: []
   }
 
 
   componentDidMount() {
     this.setState(
       {
-        sel_name: ALLHIKINGTRAILS,
+        sel_trailname: ALLHIKINGTRAILS,
       },
       () => {
       this.fetchTrail()
@@ -30,7 +30,7 @@ class App extends Component {
 
   fetchdata = () => {
       this.setState({
-        data: hikingdata
+        traildata: hikingdata
       });
   } 
 
@@ -40,14 +40,14 @@ class App extends Component {
       console.log(dropdownName)
       const dropdown = [ALLHIKINGTRAILS,...dropdownName]
       this.setState({
-        names: dropdown
+        trailnames: dropdown
       });
   } 
 
   handleInputChange = (event) => {
     this.setState(
       {
-        sel_name: event.target.value
+        sel_trailname: event.target.value
       },
       () => {
       this.fetchTrail() 
@@ -56,14 +56,14 @@ class App extends Component {
 
 
   fetchTrail = () => { 
-    if (this.state.sel_name !== ALLHIKINGTRAILS) {
-        let fetchedTrail = hikingdata.filter((ele) => ele.Name === this.state.sel_name)
+    if (this.state.sel_trailname !== ALLHIKINGTRAILS) {
+        let fetchedTrail = hikingdata.filter((ele) => ele.Name === this.state.sel_trailname)
         this.setState({
-          filteredData: fetchedTrail
+          filteredtrailData: fetchedTrail
         })
     } else {
       this.setState({
-        filteredData: this.state.data
+        filteredtrailData: this.state.traildata
       })
     }
   }
@@ -83,8 +83,7 @@ class App extends Component {
         <div className="col-md-4">
         <div className="card">
       <h6 className="p-1 mt-1 mb-1"><b>Select a Trail</b></h6> 
-        <ChooseName results={this.state.names} handleInputChange={this.handleInputChange} /> 
-
+        <ChooseName results={this.state.trailnames} handleInputChange={this.handleInputChange} /> 
         </div>
         </div>
  
