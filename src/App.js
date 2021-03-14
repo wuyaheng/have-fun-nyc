@@ -1,0 +1,102 @@
+import React, { Component } from 'react';
+import './App.css';
+import ChooseName from "./components/ChooseName/index";
+// import MapBox from "./components/MapBox/index";
+import hikingdata from "./data/hiking.json"; 
+import axios from "axios";
+
+const ALLHIKINGTRAILS = "All Hiking Trails"
+
+class App extends Component {
+  state = {
+    names: [],
+    sel_name: "",
+    data: [],
+    filteredData: []
+  }
+
+
+  componentDidMount() {
+    this.setState(
+      {
+        sel_name: ALLHIKINGTRAILS,
+      },
+      () => {
+      this.fetchTrail()
+      });
+    this.fetchdata()
+    this.fetchName();
+  }
+
+  fetchdata = () => {
+      this.setState({
+        data: hikingdata
+      });
+  } 
+
+
+  fetchName = () => {
+      const dropdownName = hikingdata.map((x) => x.Name)
+      console.log(dropdownName)
+      const dropdown = [ALLHIKINGTRAILS,...dropdownName]
+      this.setState({
+        names: dropdown
+      });
+  } 
+
+  handleInputChange = (event) => {
+    this.setState(
+      {
+        sel_name: event.target.value
+      },
+      () => {
+      this.fetchTrail() 
+      })
+  }
+
+
+  fetchTrail = () => { 
+    if (this.state.sel_name !== ALLHIKINGTRAILS) {
+        let fetchedTrail = hikingdata.filter((ele) => ele.Name === this.state.sel_name)
+        this.setState({
+          filteredData: fetchedTrail
+        })
+    } else {
+      this.setState({
+        filteredData: this.state.data
+      })
+    }
+  }
+
+
+  render() { 
+      return (
+        <>
+          <nav>
+            <div className="nav-wrapper #455a64 blue-grey darken-2">
+              <a href="#" className="brand-logo center">Hiking Trail</a>
+            </div>
+          </nav>
+        
+        <div className="container-fluid mt-2">
+        <div className="row mb-0">
+        <div className="col-md-4">
+        <div className="card">
+      <h6 className="p-1 mt-1 mb-1"><b>Select a Trail</b></h6> 
+        <ChooseName results={this.state.names} handleInputChange={this.handleInputChange} /> 
+
+        </div>
+        </div>
+ 
+        <div className="col-md-8">
+        <div className="card">
+          {/* <MapBox results = {data}/> */}
+          </div>
+        </div>
+        </div>
+        </div> 
+        </>
+      );
+    } 
+}
+export default App;
