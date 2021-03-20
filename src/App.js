@@ -3,6 +3,7 @@ import './App.css';
 import ChooseNTA from "./components/ChooseNTA/index";
 import MapBox from "./components/MapBox/index";
 import hikingdata from "./data/hiking.json"; 
+import cricketdata from "./data/cricket.json"; 
 import geodata from "./data/nyc.geojson";
 import axios from "axios";
 
@@ -14,7 +15,8 @@ class App extends Component {
     geo: [],
     nta: [],
     sel_nta: "",
-    hiking: []
+    hiking: [],
+    cricket: []
   }
 
 
@@ -25,6 +27,7 @@ class App extends Component {
       },
       () => {
       this.fetchHiking()
+      this.fetchCricket()
       });
     this.fetchdata()
   }
@@ -34,6 +37,12 @@ class App extends Component {
         hiking: hikingdata
       });
   } 
+
+  fetchCricket = () => {
+    this.setState({
+      cricket: cricketdata
+    })
+  }
 
   fetchdata = async () => {
     try {
@@ -57,7 +66,8 @@ class App extends Component {
 
     let data = {
       geoData: this.state.geo,
-      trailData: this.state.hiking
+      trailData: this.state.hiking,
+      cricketData: this.state.cricket
     }
 
       return (

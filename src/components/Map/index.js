@@ -36,6 +36,13 @@ export default (props) => {
         iconAnchor: [15, 42]
     });
 
+    var iconCricket = L.divIcon({
+      className: 'custom-div-icon',
+      html: "<div style='background-color:#70a288;' class='marker-pin'></div><i class='fas fa-running awesome'>", 
+      iconSize: [30, 42], 
+      iconAnchor: [15, 42]
+  });
+
         // Create a new marker cluster group
         var markers = L.markerClusterGroup();
 
@@ -45,6 +52,13 @@ export default (props) => {
       (pin) ? 
       markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconHiking}).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Length: </b>' + fixUndefined(pin.Length) +'</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>') 
    ) : null );
+
+   
+
+      props.pins.cricketData.forEach((pin) =>
+      (pin) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconCricket}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>') 
+    ) : null );
 
      // Add our marker cluster layer to the map
       schoolMap.addLayer(markers);
