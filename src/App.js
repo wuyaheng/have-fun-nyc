@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import ChooseNTA from "./components/ChooseNTA/index";
 import MapBox from "./components/MapBox/index";
-import hikingdata from "./data/hikingMap.json"; 
+import hikingdata from "./data/hiking.json"; 
 import geodata from "./data/nyc.geojson";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ class App extends Component {
     geo: [],
     nta: [],
     sel_nta: "",
-    traildata: []
+    hiking: []
   }
 
 
@@ -31,7 +31,7 @@ class App extends Component {
 
   fetchHiking = () => {
       this.setState({
-        traildata: hikingdata
+        hiking: hikingdata
       });
   } 
 
@@ -57,7 +57,7 @@ class App extends Component {
 
     let data = {
       geoData: this.state.geo,
-      trailData: this.state.traildata 
+      trailData: this.state.hiking
     }
 
       return (
