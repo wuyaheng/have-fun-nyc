@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import ChooseName from "./components/ChooseName/index";
-// import MapBox from "./components/MapBox/index";
-import hikingdata from "./data/hiking.json"; 
+import MapBox from "./components/MapBox/index";
+import hikingdata from "./data/hikingMap.json"; 
 import axios from "axios";
 
 const ALLHIKINGTRAILS = "All Hiking Trails"
@@ -37,7 +37,6 @@ class App extends Component {
 
   fetchName = () => {
       const dropdownName = hikingdata.map((x) => x.Name)
-      console.log(dropdownName)
       const dropdown = [ALLHIKINGTRAILS,...dropdownName]
       this.setState({
         trailnames: dropdown
@@ -69,6 +68,8 @@ class App extends Component {
   }
 
 
+
+
   render() { 
       return (
         <>
@@ -89,7 +90,7 @@ class App extends Component {
  
         <div className="col-md-8">
         <div className="card">
-          {/* <MapBox results = {data}/> */}
+          <MapBox results = {this.state.filteredtrailData}/>
           </div>
         </div>
         </div>

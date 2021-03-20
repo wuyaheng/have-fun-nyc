@@ -12,9 +12,7 @@ export default (props) => {
       MAP_ID.setAttribute("id", "mapid");
       MAP_CONTAINER.appendChild(MAP_ID);
 
-      let schoolMap; 
-      props.pins.schoolData.length > 200 ? 
-      schoolMap = L.map("mapid").setView([props.lat, props.lon], 10) : schoolMap = L.map("mapid").setView([props.lat, props.lon], 13)
+      let myMap = L.map("mapid").setView([props.lat, props.lon], 10) 
 
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -27,20 +25,19 @@ export default (props) => {
           zoomOffset: -1,
           accessToken: process.env.REACT_APP_MAP_API_KEY,
         }
-      ).addTo(schoolMap);
+      ).addTo(myMap);
 
         // Create a new marker cluster group
         var markers = L.markerClusterGroup();
 
-        var fixUndefined = (item) => (typeof (item) !== 'undefined' ? item : 'Unknown'); 
+        var fixUndefined = (item) => (item !== null ? item : 'Unknown'); 
 
-      props.pins.schoolData.forEach((pin) =>
-      (pin.school_name || pin.phone_number || pin.school_email || pin.website) ? 
-      markers.addLayer(L.marker([pin.latitude, pin.longitude]).bindTooltip('<b>' + fixUndefined(pin.school_name) + '</b><p><b>Phone:</b> ' + fixUndefined(pin.phone_number) + '</p><p><b>Email:</b> ' + fixUndefined(pin.school_email) + '</p><p><b>Website:</b> ' + fixUndefined(pin.website) + '</p><p><b>Location:</b> ' + pin.location.split("(")[0] + '</p><p><b>Admissions Priority:</b> ' + fixUndefined(pin.admissionspriority11) + '</p><p><b>Time:</b> ' + fixUndefined(pin.start_time) + ' - ' + fixUndefined(pin.end_time) + '</p><p><b>Subway:</b> ' + fixUndefined(pin.subway) + '</p><p><b>Bus:</b> ' + fixUndefined(pin.bus) + '</p><p><b>Language Classes:</b> ' + fixUndefined(pin.language_classes) + '</p><p><b>Advanced Placement Courses: </b> ' + fixUndefined(pin.advancedplacement_courses) + '</p><p><b>Diploma Endorsements: </b> ' + fixUndefined(pin.diplomaendorsements) + '</p>') 
+      props.pins.forEach((pin) =>
+      (pin.Name) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon]).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p>Length: ' + fixUndefined(pin.Length) +'</p><p>Difficulty: ' + fixUndefined(pin.Difficulty) + '</p><p>Park Name: ' + fixUndefined(pin.Park_Name) + '</p><p>Location: ' + fixUndefined(pin.Location) + '</p><p>Other Details: ' + fixUndefined(pin.Other_Details) + '</p>') 
    ) : null );
 
-     // Add our marker cluster layer to the map
-      schoolMap.addLayer(markers);
+     myMap.addLayer(markers);
     }
 
     return () => (MAP_CONTAINER.innerHTML = "");
