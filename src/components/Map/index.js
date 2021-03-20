@@ -5,14 +5,16 @@ import 'leaflet.markercluster';
 
 export default (props) => {
   React.useEffect(() => {
-    const MAP_CONTAINER = document.getElementById("map-container");
+    const MAP_CONTAINER2 = document.getElementById("map-container2");
 
     if (props.lat && props.lon && props.pins) {
       const MAP_ID = document.createElement("div");
       MAP_ID.setAttribute("id", "mapid");
-      MAP_CONTAINER.appendChild(MAP_ID);
+      MAP_CONTAINER2.appendChild(MAP_ID);
 
-      let myMap = L.map("mapid").setView([props.lat, props.lon], 10) 
+      let schoolMap; 
+      props.pins.trailData.length > 20 ? 
+      schoolMap = L.map("mapid").setView([props.lat, props.lon], 10) : schoolMap = L.map("mapid").setView([props.lat, props.lon], 13)
 
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -25,24 +27,79 @@ export default (props) => {
           zoomOffset: -1,
           accessToken: process.env.REACT_APP_MAP_API_KEY,
         }
-      ).addTo(myMap);
+      ).addTo(schoolMap);
+
+      var iconHiking = L.divIcon({
+        className: 'custom-div-icon',
+        html: "<div style='background-color:#70a288;' class='marker-pin'></div><i class='fas fa-hiking awesome'>", 
+        iconSize: [30, 42], 
+        iconAnchor: [15, 42]
+    });
 
         // Create a new marker cluster group
         var markers = L.markerClusterGroup();
 
         var fixUndefined = (item) => (item !== null ? item : 'Unknown'); 
 
-      props.pins.forEach((pin) =>
-      (pin.Name) ? 
-      markers.addLayer(L.marker([pin.lat, pin.lon]).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p>Length: ' + fixUndefined(pin.Length) +'</p><p>Difficulty: ' + fixUndefined(pin.Difficulty) + '</p><p>Park Name: ' + fixUndefined(pin.Park_Name) + '</p><p>Location: ' + fixUndefined(pin.Location) + '</p><p>Other Details: ' + fixUndefined(pin.Other_Details) + '</p>') 
+      props.pins.trailData.forEach((pin) =>
+      (pin) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconHiking}).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Length: </b>' + fixUndefined(pin.Length) +'</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>') 
    ) : null );
 
-     myMap.addLayer(markers);
+     // Add our marker cluster layer to the map
+      schoolMap.addLayer(markers);
+
+  
+              function chooseColor(borough) {
+                switch (borough) {
+                case "Brooklyn":
+                return "#bac7be";
+                case "Bronx":
+                return "#8d99ae";
+                case "Manhattan":
+                return "#a0ced9";
+                case "Queens":
+                return "#cc8b86";
+                case "Staten Island":
+                return "#f5cb5c";
+                default:
+                return "black";
+                }
+            }
+            
+
+                var geoJson = L.geoJson(props.pins.geoData, {
+                style: function(feature) {
+                    return {
+                    color: "white",
+                    fillColor: chooseColor(feature.properties.borough),
+                    fillOpacity: 0.8,
+                    weight: 1.5
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.on({
+                    mouseover: function(event) {
+                        layer = event.target;
+                        layer.setStyle({
+                        fillOpacity: 1
+                        });
+                    },
+                    mouseout: function(event) {
+                        geoJson.resetStyle(event.target);
+                    },
+                    click: function(event) {
+                        schoolMap.fitBounds(event.target.getBounds());
+                    }
+                    });
+                    layer.bindTooltip("<p><b>" + feature.properties.neighborhood + "</b></p>");
+                }
+                }).addTo(schoolMap);
     }
 
-    return () => (MAP_CONTAINER.innerHTML = "");
+    return () => (MAP_CONTAINER2.innerHTML = "");
   }, [props.lat, props.lon, props.pins]);
 
-  return <div id="map-container"></div>;
+  return <div id="map-container2"></div>;
 };
 

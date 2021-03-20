@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChooseName({ results, handleInputChange }) {
+function ChooseNTA({ results, handleInputChange }) {
     return (
         <div className="input-group pl-2 pr-2">
             <select className="custom-select" id="inputGroupSelect01" onChange={handleInputChange}>
@@ -16,4 +16,4 @@ function ChooseName({ results, handleInputChange }) {
     )
 }
 
-export default ChooseName; 
+export default ChooseNTA; 

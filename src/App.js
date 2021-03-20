@@ -1,81 +1,70 @@
 import React, { Component } from 'react';
 import './App.css';
-import ChooseName from "./components/ChooseName/index";
+import ChooseNTA from "./components/ChooseNTA/index";
 import MapBox from "./components/MapBox/index";
 import hikingdata from "./data/hikingMap.json"; 
+import geodata from "./data/nyc.geojson";
 import axios from "axios";
 
-const ALLHIKINGTRAILS = "All Hiking Trails"
+
+const ALLNEIGHBORHOOD = "All Neighborhood"
 
 class App extends Component {
   state = {
-    trailnames: [],
-    sel_trailname: "",
-    traildata: [],
-    filteredtrailData: []
+    geo: [],
+    nta: [],
+    sel_nta: "",
+    traildata: []
   }
 
 
   componentDidMount() {
     this.setState(
       {
-        sel_trailname: ALLHIKINGTRAILS,
+        sel_nta: ALLNEIGHBORHOOD,
       },
       () => {
-      this.fetchTrail()
+      this.fetchHiking()
       });
     this.fetchdata()
-    this.fetchName();
   }
 
-  fetchdata = () => {
+  fetchHiking = () => {
       this.setState({
         traildata: hikingdata
       });
   } 
 
-
-  fetchName = () => {
-      const dropdownName = hikingdata.map((x) => x.Name)
-      const dropdown = [ALLHIKINGTRAILS,...dropdownName]
+  fetchdata = async () => {
+    try {
+      const res = await axios.get(geodata);
       this.setState({
-        trailnames: dropdown
+        geo: res.data.features
       });
-  } 
-
-  handleInputChange = (event) => {
-    this.setState(
-      {
-        sel_trailname: event.target.value
-      },
-      () => {
-      this.fetchTrail() 
-      })
-  }
-
-
-  fetchTrail = () => { 
-    if (this.state.sel_trailname !== ALLHIKINGTRAILS) {
-        let fetchedTrail = hikingdata.filter((ele) => ele.Name === this.state.sel_trailname)
-        this.setState({
-          filteredtrailData: fetchedTrail
-        })
-    } else {
+      const dropdownNta = this.state.geo.map((x) => x.properties.neighborhood)
+      console.log(dropdownNta)
+      const dropdown = [ALLNEIGHBORHOOD,...dropdownNta]
       this.setState({
-        filteredtrailData: this.state.traildata
-      })
+        nta: dropdown
+      });
+    } catch (error) {
+      console.log(error)
     }
-  }
-
-
+  } 
 
 
   render() { 
+
+    let data = {
+      geoData: this.state.geo,
+      trailData: this.state.traildata 
+    }
+
       return (
         <>
           <nav>
             <div className="nav-wrapper #455a64 blue-grey darken-2">
-              <a href="#" className="brand-logo center">Hiking Trail</a>
+              <a href="#" className="brand-logo center">NYC FUN</a> 
             </div>
           </nav>
         
@@ -83,14 +72,14 @@ class App extends Component {
         <div className="row mb-0">
         <div className="col-md-4">
         <div className="card">
-      <h6 className="p-1 mt-1 mb-1"><b>Select a Trail</b></h6> 
-        <ChooseName results={this.state.trailnames} handleInputChange={this.handleInputChange} /> 
+      <h6 className="p-1 mt-1 mb-1"><b>Select a Neighborhood</b></h6> 
+      <ChooseNTA results={this.state.nta} handleInputChange={this.handleInputChange} /> 
         </div>
         </div>
  
         <div className="col-md-8">
         <div className="card">
-          <MapBox results = {this.state.filteredtrailData}/>
+        <MapBox results = {data}/>
           </div>
         </div>
         </div>
