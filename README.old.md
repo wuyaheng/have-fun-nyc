@@ -1,2 +1,0 @@
-# nyc-neighborhood
-nyc-neighborhood
