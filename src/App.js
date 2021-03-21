@@ -5,6 +5,7 @@ import MapBox from "./components/MapBox/index";
 import hikingdata from "./data/hiking.json"; 
 import cricketdata from "./data/cricket.json"; 
 import beachdata from "./data/beach.json";
+import iceskatingdata from "./data/iceskating.json";
 import geodata from "./data/nyc.geojson";
 import axios from "axios";
 
@@ -18,7 +19,8 @@ class App extends Component {
     sel_nta: "",
     hiking: [],
     cricket: [],
-    beach: []
+    beach: [],
+    iceskating: []
   }
 
 
@@ -31,6 +33,7 @@ class App extends Component {
       this.fetchHiking()
       this.fetchCricket()
       this.fetchBeach()
+      this.fetchIceSkating() 
       });
     this.fetchdata()
   }
@@ -50,6 +53,12 @@ class App extends Component {
   fetchBeach = () => {
     this.setState({
       beach: beachdata
+    })
+  }
+
+  fetchIceSkating = () => {
+    this.setState({
+      iceskating: iceskatingdata 
     })
   }
 
@@ -77,7 +86,8 @@ class App extends Component {
       geoData: this.state.geo,
       trailData: this.state.hiking,
       cricketData: this.state.cricket,
-      beachData: this.state.beach 
+      beachData: this.state.beach,
+      iceskatingData: this.state.iceskating
     }
 
       return (

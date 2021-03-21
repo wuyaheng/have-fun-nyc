@@ -50,6 +50,13 @@ export default (props) => {
       iconAnchor: [15, 42]
   });
 
+    var iconIceSkating = L.divIcon({
+      className: 'custom-div-icon',
+      html: "<div style='background-color:#cab1bd;' class='marker-pin'></div><i class='fas fa-skating awesome'>", 
+      iconSize: [30, 42], 
+      iconAnchor: [15, 42]
+  });
+
         // Create a new marker cluster group
         var markers = L.markerClusterGroup();
 
@@ -70,6 +77,11 @@ export default (props) => {
       props.pins.beachData.forEach((pin) =>
       (pin) ? 
       markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconBeach}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>') 
+    ) : null );
+
+      props.pins.iceskatingData.forEach((pin) =>
+      (pin) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconIceSkating}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>') 
     ) : null );
 
      // Add our marker cluster layer to the map
