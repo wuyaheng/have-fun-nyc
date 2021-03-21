@@ -10,7 +10,7 @@ function MapBox(props) {
         const c = props.results.geoData[0].geometry.coordinates;
         lat = c[0][0][1]
         lon = c[0][0][0]
-        zoom = 13
+        zoom = 13.5
     }
 
     return (

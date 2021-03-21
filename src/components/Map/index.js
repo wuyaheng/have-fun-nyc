@@ -110,7 +110,7 @@ export default (props) => {
         (pin) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconBeach
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>').addTo(f3Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Barbecue Allowed: </b>' + fixUndefined(pin.Barbecue_Allowed) + '</p><p><b>Bathroom: </b>' + fixUndefined(pin.Bathroom) + '</p><p><b>Mobile Charging Stations: </b>' + fixUndefined(pin.Mobile_Charging_Stations) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>').addTo(f3Sub) : null);
 
       props.pins.iceskatingData.forEach((pin) =>
         (pin) ?
@@ -151,7 +151,6 @@ export default (props) => {
             return "black";
         }
       }
-
 
       var geoJson = L.geoJson(props.pins.geoData, {
         style: function (feature) {

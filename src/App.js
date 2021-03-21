@@ -131,7 +131,7 @@ class App extends Component {
       return (
         <>        
         <div className="container-fluid mt-0">
-        <h6 className="p-1 mt-1 mb-1 text-center"><b>Select a Neighborhood in NYC to Find Nearby Indoor and Outdoor Activities</b></h6> 
+        <h6 className="p-1 mt-1 mb-1 text-center"><b>Select a Neighborhood in NYC to Find Nearby Outdoor Activities</b></h6> 
       <ChooseNTA results={this.state.nta} handleInputChange={this.handleInputChange} /> 
         <div className="row mb-0">
         <div className="col-md-12">
