@@ -38,7 +38,14 @@ export default (props) => {
 
     var iconCricket = L.divIcon({
       className: 'custom-div-icon',
-      html: "<div style='background-color:#70a288;' class='marker-pin'></div><i class='fas fa-running awesome'>", 
+      html: "<div style='background-color:#6c757d;' class='marker-pin'></div><i class='fas fa-running awesome'>", 
+      iconSize: [30, 42], 
+      iconAnchor: [15, 42]
+  });
+
+    var iconBeach = L.divIcon({
+      className: 'custom-div-icon',
+      html: "<div style='background-color:#0096c7;' class='marker-pin'></div><i class='fas fa-umbrella-beach awesome'>", 
       iconSize: [30, 42], 
       iconAnchor: [15, 42]
   });
@@ -58,6 +65,11 @@ export default (props) => {
       props.pins.cricketData.forEach((pin) =>
       (pin) ? 
       markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconCricket}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>') 
+    ) : null );
+
+      props.pins.beachData.forEach((pin) =>
+      (pin) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconBeach}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>') 
     ) : null );
 
      // Add our marker cluster layer to the map
