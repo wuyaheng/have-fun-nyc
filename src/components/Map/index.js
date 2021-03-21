@@ -102,13 +102,13 @@ export default (props) => {
         (pin) ?
         markers.addLayer(L.marker([pin.lat, pin.lon], {
           icon: iconBeach
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>')) : null);
 
       props.pins.iceskatingData.forEach((pin) =>
         (pin) ?
         markers.addLayer(L.marker([pin.lat, pin.lon], {
           icon: iconIceSkating
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Ice Skating</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>')) : null);
 
 
       props.pins.outdoorpoolData.forEach((pin) =>
@@ -122,7 +122,7 @@ export default (props) => {
         (pin) ?
         markers.addLayer(L.marker([pin.geometry.coordinates[1], pin.geometry.coordinates[0]], {
           icon: iconLibrary
-        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + '</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + ' - Library</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>')) : null);
 
         
 
