@@ -54,10 +54,18 @@ export default (props) => {
       });
 
 
-
       var iconOutDoorPool = L.divIcon({
         className: 'custom-div-icon',
         html: "<div style='background-color:#a3cef1;' class='marker-pin'></div><i class='fas fa-swimmer awesome'>",
+        iconSize: [30, 42],
+        iconAnchor: [15, 42]
+      });
+
+      
+
+      var iconLibrary = L.divIcon({
+        className: 'custom-div-icon',
+        html: "<div style='background-color:#f2cc8f;' class='marker-pin'></div><i class='fas fa-book-reader awesome'>",
         iconSize: [30, 42],
         iconAnchor: [15, 42]
       });
@@ -94,14 +102,20 @@ export default (props) => {
         }).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>')) : null);
 
 
-
       props.pins.outdoorpoolData.forEach((pin) =>
         (pin) ?
         markers.addLayer(L.marker([pin.lat, pin.lon], {
           icon: iconOutDoorPool
         }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>')) : null);
 
-      // Add our marker cluster layer to the map
+
+      props.pins.libraryData.forEach((pin) =>
+        (pin) ?
+        markers.addLayer(L.marker([pin.geometry.coordinates[1], pin.geometry.coordinates[0]], {
+          icon: iconLibrary
+        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + '</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>')) : null);
+
+      
       myMap.addLayer(markers);
 
 
