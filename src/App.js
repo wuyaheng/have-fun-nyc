@@ -80,19 +80,35 @@ class App extends Component {
       const dropdownNta = this.state.geo.map((x) => x.properties.neighborhood)
       console.log(dropdownNta)
       const dropdown = [ALLNEIGHBORHOOD,...dropdownNta]
+      let uniqDropdown = [...new Set(dropdown)]
       this.setState({
-        nta: dropdown
+        nta: uniqDropdown
       });
     } catch (error) {
       console.log(error)
     }
   } 
 
+  handleInputChange = (e) => {
+    this.setState({
+      sel_nta: e.target.value
+    })
+  }
+
 
   render() { 
 
+    let geoDataToDisplay = this.state.geo;
+    if(this.state.sel_nta !== ALLNEIGHBORHOOD) {
+      geoDataToDisplay = this.state.geo.filter((item) => {
+        return item.properties.neighborhood == this.state.sel_nta
+      })
+    }
+
+    console.log(geoDataToDisplay)
+
     let data = {
-      geoData: this.state.geo,
+      geoData: geoDataToDisplay,
       trailData: this.state.hiking,
       cricketData: this.state.cricket,
       beachData: this.state.beach,
