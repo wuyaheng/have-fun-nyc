@@ -7,7 +7,6 @@ import cricketdata from "./data/cricket.json";
 import beachdata from "./data/beach.json";
 import iceskatingdata from "./data/iceskating.json";
 import outdoorpooldata from "./data/outdoorpool.json";
-import librarydata from "./data/library.json"; 
 import basketballdata from "./data/basketball.json";
 import geodata from "./data/nyc.geojson";
 import axios from "axios";
@@ -25,7 +24,6 @@ class App extends Component {
     beach: [],
     iceskating: [],
     outdoorpool: [],
-    library: [],
     basketball: []
   }
 
@@ -41,7 +39,6 @@ class App extends Component {
       this.fetchBeach()
       this.fetchIceSkating() 
       this.fetchOutDoorPool()
-      this.fetchLibrary()
       this.fetchBasketball()
       });
     this.fetchdata()
@@ -77,11 +74,6 @@ class App extends Component {
     })
   }
 
-  fetchLibrary = () => {
-    this.setState({
-      library: librarydata.features
-    })
-  }
 
   fetchBasketball = () => {
     this.setState({
@@ -133,7 +125,6 @@ class App extends Component {
       beachData: this.state.beach,
       iceskatingData: this.state.iceskating,
       outdoorpoolData: this.state.outdoorpool,
-      libraryData: this.state.library,
       basketballData: this.state.basketball
     } 
 

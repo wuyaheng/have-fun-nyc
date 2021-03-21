@@ -50,16 +50,6 @@ export default (props) => {
       });
 
       
-
-      var iconLibrary = L.divIcon({
-        className: 'custom-div-icon',
-        html: "<div style='background-color:#f2cc8f;' class='marker-pin'></div><i class='fas fa-book-reader awesome'>",
-        iconSize: [30, 42],
-        iconAnchor: [15, 42]
-      });
-
-
-      
       var iconBasketball = L.divIcon({
         className: 'custom-div-icon',
         html: "<div style='background-color:#6a040f;' class='marker-pin'></div><i class='fas fa-basketball-ball awesome'>",
@@ -90,7 +80,6 @@ export default (props) => {
       var f4Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
       var f5Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
       var f6Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
-      var f7Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
 
       var overLayMap = {
         "Hiking": f1Sub, 
@@ -98,8 +87,7 @@ export default (props) => {
         "Beach": f3Sub,
         "Ice Skating": f4Sub,
         "Outdoor Pool": f5Sub,
-        "Library": f6Sub,
-        "Basketball Playground": f7Sub
+        "Basketball Playground": f6Sub
     };
     
       var fixUndefined = (item) => (item !== null ? item : 'Unknown');
@@ -108,7 +96,7 @@ export default (props) => {
         (pin) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconHiking
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Length: </b>' + fixUndefined(pin.Length) + '</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>').addTo(f1Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Hiking</b><p><b>Length: </b>' + fixUndefined(pin.Length) + '</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>').addTo(f1Sub) : null);
 
 
 
@@ -116,7 +104,7 @@ export default (props) => {
         (pin) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconCricket
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>').addTo(f2Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>').addTo(f2Sub) : null);
 
       props.pins.beachData.forEach((pin) =>
         (pin) ?
@@ -128,29 +116,22 @@ export default (props) => {
         (pin) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconIceSkating
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Ice Skating</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>').addTo(f4Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Ice Skating</b><p><b>Ice Skating Type: </b>' + fixUndefined(pin.IceSkating_Type) + '</p><p><b>Opening Date: </b>' + fixUndefined(pin.Opening_Date) + '</p><p><b>Closing Date: </b>' + fixUndefined(pin.Closing_Date) + '</p><p><b>Adult Price: </b>' + fixUndefined(pin.Public_Skate_Admission_Price_Adult) + '</p><p><b>Child Price: </b>' + fixUndefined(pin.Public_Skate_Admission_Price_Child) + '</p><p><b>Senior Price: </b>'+ fixUndefined(pin.Public_Skate_Admission_Price_Senior)+'</p><p><b>Skate Rental Cost: </b>'+ fixUndefined(pin.Skate_Rental_Cost) +'</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>').addTo(f4Sub) : null);
 
 
       props.pins.outdoorpoolData.forEach((pin) =>
         (pin) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconOutDoorPool
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>').addTo(f5Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Pools Outdoor Type: </b>' + fixUndefined(pin.Pools_outdoor_Type) + '</p><p><b>Phone: </b>' + fixUndefined(pin.Phone) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>').addTo(f5Sub) : null);
 
 
-      props.pins.libraryData.forEach((pin) =>
-        (pin) ?
-        L.marker([pin.geometry.coordinates[1], pin.geometry.coordinates[0]], {
-          icon: iconLibrary
-        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + ' - Library</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>').addTo(f6Sub) : null);
-
-        
 
       props.pins.basketballData.forEach((pin) =>
         (pin.lat && pin.lon) ?
         L.marker([pin.lat, pin.lon], {
           icon: iconBasketball
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Basketball</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p>').addTo(f7Sub) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Basketball</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p>').addTo(f6Sub) : null);
 
       L.control.layers(null, overLayMap, {collapsed:false}).addTo(myMap)
 
