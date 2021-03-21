@@ -1,6 +1,7 @@
 import React from "react";
 import L from "leaflet";
 import 'leaflet.markercluster';
+import "leaflet.featuregroup.subgroup";
 
 
 export default (props) => {
@@ -11,19 +12,6 @@ export default (props) => {
       const MAP_ID = document.createElement("div");
       MAP_ID.setAttribute("id", "mapid");
       MAP_CONTAINER2.appendChild(MAP_ID);
-
-      let myMap = L.map("mapid").setView([props.lat, props.lon], props.zoom)
-
-      L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          id: "mapbox/streets-v11",
-          tileSize: 512,
-          zoomOffset: -1,
-          accessToken: process.env.REACT_APP_MAP_API_KEY,
-        }
-      ).addTo(myMap);
 
       var iconHiking = L.divIcon({
         className: 'custom-div-icon',
@@ -79,62 +67,92 @@ export default (props) => {
         iconAnchor: [15, 42]
       });
 
+      let myMap = L.map("mapid").setView([props.lat, props.lon], props.zoom)
 
-      var markers = L.markerClusterGroup();
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: process.env.REACT_APP_MAP_API_KEY,
+        }
+      ).addTo(myMap);
 
+
+
+      var masClusGroup = new L.markerClusterGroup().addTo(myMap);
+
+      var f1Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f2Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f3Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f4Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f5Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f6Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+      var f7Sub = L.featureGroup.subGroup(masClusGroup).addTo(myMap);
+
+      var overLayMap = {
+        "Hiking": f1Sub, 
+        "Cricket": f2Sub,
+        "Beach": f3Sub,
+        "Ice Skating": f4Sub,
+        "Outdoor Pool": f5Sub,
+        "Library": f6Sub,
+        "Basketball Playground": f7Sub
+    };
+    
       var fixUndefined = (item) => (item !== null ? item : 'Unknown');
 
       props.pins.trailData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconHiking
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Length: </b>' + fixUndefined(pin.Length) + '</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Length: </b>' + fixUndefined(pin.Length) + '</p><p><b>Difficulty: </b>' + fixUndefined(pin.Difficulty) + '</p><p><b>Park Name: </b>' + fixUndefined(pin.Park_Name) + '</p><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Other Details: </b>' + fixUndefined(pin.Other_Details) + '</p>').addTo(f1Sub) : null);
 
 
 
       props.pins.cricketData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconCricket
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Cricket Field</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Number of Fields: </b>' + fixUndefined(pin.Num_of_Fields) + '</p>').addTo(f2Sub) : null);
 
       props.pins.beachData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconBeach
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Description: </b>' + fixUndefined(pin.Description) + '</p>').addTo(f3Sub) : null);
 
       props.pins.iceskatingData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconIceSkating
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Ice Skating</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Ice Skating</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>').addTo(f4Sub) : null);
 
 
       props.pins.outdoorpoolData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconOutDoorPool
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>').addTo(f5Sub) : null);
 
 
       props.pins.libraryData.forEach((pin) =>
         (pin) ?
-        markers.addLayer(L.marker([pin.geometry.coordinates[1], pin.geometry.coordinates[0]], {
+        L.marker([pin.geometry.coordinates[1], pin.geometry.coordinates[0]], {
           icon: iconLibrary
-        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + ' - Library</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + ' - Library</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>').addTo(f6Sub) : null);
 
         
 
       props.pins.basketballData.forEach((pin) =>
         (pin.lat && pin.lon) ?
-        markers.addLayer(L.marker([pin.lat, pin.lon], {
+        L.marker([pin.lat, pin.lon], {
           icon: iconBasketball
-        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Basketball</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p>')) : null);
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Basketball</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p>').addTo(f7Sub) : null);
 
-
-      myMap.addLayer(markers);
-
+      L.control.layers(null, overLayMap, {collapsed:false}).addTo(myMap)
 
       function chooseColor(borough) {
         switch (borough) {

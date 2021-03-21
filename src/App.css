@@ -4,6 +4,10 @@ body {
     padding: 0;
     margin: 0;
   }
+
+  .navbar-text {
+    margin: 0 auto !important;
+  }
   
 
   #map-container {

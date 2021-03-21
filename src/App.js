@@ -135,26 +135,15 @@ class App extends Component {
       outdoorpoolData: this.state.outdoorpool,
       libraryData: this.state.library,
       basketballData: this.state.basketball
-    }
+    } 
 
       return (
-        <>
-          <nav>
-            <div className="nav-wrapper #455a64 blue-grey darken-2">
-              <a href="#" className="brand-logo center">NYC FUN</a> 
-            </div>
-          </nav>
-        
-        <div className="container-fluid mt-2">
-        <div className="row mb-0">
-        <div className="col-md-4">
-        <div className="card">
-      <h6 className="p-1 mt-1 mb-1"><b>Select a Neighborhood</b></h6> 
+        <>        
+        <div className="container-fluid mt-0">
+        <h6 className="p-1 mt-1 mb-1 text-center"><b>Select a Neighborhood to Find Nearby Indoor and Ourdoor Activities</b></h6> 
       <ChooseNTA results={this.state.nta} handleInputChange={this.handleInputChange} /> 
-        </div>
-        </div>
- 
-        <div className="col-md-8">
+        <div className="row mb-0">
+        <div className="col-md-12">
         <div className="card">
         <MapBox results = {data}/>
           </div>
