@@ -70,7 +70,16 @@ export default (props) => {
         iconAnchor: [15, 42]
       });
 
-      // Create a new marker cluster group
+
+      
+      var iconBasketball = L.divIcon({
+        className: 'custom-div-icon',
+        html: "<div style='background-color:#6a040f;' class='marker-pin'></div><i class='fas fa-basketball-ball awesome'>",
+        iconSize: [30, 42],
+        iconAnchor: [15, 42]
+      });
+
+
       var markers = L.markerClusterGroup();
 
       var fixUndefined = (item) => (item !== null ? item : 'Unknown');
@@ -115,7 +124,15 @@ export default (props) => {
           icon: iconLibrary
         }).bindTooltip('<b>' + fixUndefined(pin.properties.system) + '</b><p><b>Location: </b>' + fixUndefined(pin.properties.streetname) + '</p><p><b>url: </b>' + fixUndefined(pin.properties.url) + '</p>')) : null);
 
-      
+        
+
+      props.pins.basketballData.forEach((pin) =>
+        (pin.lat && pin.lon) ?
+        markers.addLayer(L.marker([pin.lat, pin.lon], {
+          icon: iconBasketball
+        }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' - Basketball</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p>')) : null);
+
+
       myMap.addLayer(markers);
 
 
