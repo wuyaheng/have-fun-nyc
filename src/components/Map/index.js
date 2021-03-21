@@ -12,7 +12,7 @@ export default (props) => {
       MAP_ID.setAttribute("id", "mapid");
       MAP_CONTAINER2.appendChild(MAP_ID);
 
-      let schoolMap = L.map("mapid").setView([props.lat, props.lon], props.zoom)
+      let myMap = L.map("mapid").setView([props.lat, props.lon], props.zoom)
 
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -23,7 +23,7 @@ export default (props) => {
           zoomOffset: -1,
           accessToken: process.env.REACT_APP_MAP_API_KEY,
         }
-      ).addTo(schoolMap);
+      ).addTo(myMap);
 
       var iconHiking = L.divIcon({
         className: 'custom-div-icon',
@@ -102,7 +102,7 @@ export default (props) => {
         }).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) + '</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>')) : null);
 
       // Add our marker cluster layer to the map
-      schoolMap.addLayer(markers);
+      myMap.addLayer(markers);
 
 
       function chooseColor(borough) {
@@ -144,16 +144,16 @@ export default (props) => {
               geoJson.resetStyle(event.target);
             },
             click: function (event) {
-              schoolMap.fitBounds(event.target.getBounds());
+              myMap.fitBounds(event.target.getBounds());
             }
           });
           layer.bindTooltip("<p><b>" + feature.properties.neighborhood + "</b></p>");
         }
-      }).addTo(schoolMap);
+      }).addTo(myMap);
     }
 
     return () => (MAP_CONTAINER2.innerHTML = "");
   }, [props.lat, props.lon, props.pins]);
 
-  return <div id = "map-container2" > < /div>;
+  return <div id = "map-container2"> </div>; 
 };
