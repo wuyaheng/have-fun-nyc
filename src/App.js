@@ -6,6 +6,7 @@ import hikingdata from "./data/hiking.json";
 import cricketdata from "./data/cricket.json"; 
 import beachdata from "./data/beach.json";
 import iceskatingdata from "./data/iceskating.json";
+import outdoorpooldata from "./data/outdoorpool.json";
 import geodata from "./data/nyc.geojson";
 import axios from "axios";
 
@@ -20,7 +21,8 @@ class App extends Component {
     hiking: [],
     cricket: [],
     beach: [],
-    iceskating: []
+    iceskating: [],
+    outdoorpool: []
   }
 
 
@@ -34,6 +36,7 @@ class App extends Component {
       this.fetchCricket()
       this.fetchBeach()
       this.fetchIceSkating() 
+      this.fetchOutDoorPool()
       });
     this.fetchdata()
   }
@@ -62,6 +65,12 @@ class App extends Component {
     })
   }
 
+  fetchOutDoorPool = () => {
+    this.setState({
+      outdoorpool: outdoorpooldata 
+    })
+  }
+
   fetchdata = async () => {
     try {
       const res = await axios.get(geodata);
@@ -87,7 +96,8 @@ class App extends Component {
       trailData: this.state.hiking,
       cricketData: this.state.cricket,
       beachData: this.state.beach,
-      iceskatingData: this.state.iceskating
+      iceskatingData: this.state.iceskating,
+      outdoorpoolData: this.state.outdoorpool 
     }
 
       return (

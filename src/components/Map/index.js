@@ -57,6 +57,15 @@ export default (props) => {
       iconAnchor: [15, 42]
   });
 
+  
+
+    var iconOutDoorPool = L.divIcon({
+      className: 'custom-div-icon',
+      html: "<div style='background-color:#a3cef1;' class='marker-pin'></div><i class='fas fa-swimmer awesome'>", 
+      iconSize: [30, 42], 
+      iconAnchor: [15, 42]
+  });
+
         // Create a new marker cluster group
         var markers = L.markerClusterGroup();
 
@@ -81,7 +90,14 @@ export default (props) => {
 
       props.pins.iceskatingData.forEach((pin) =>
       (pin) ? 
-      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconIceSkating}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Beach</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>') 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconIceSkating}).bindTooltip('<b>' + fixUndefined(pin.Name) + '</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Notes: </b>' + fixUndefined(pin.Notes) + '</p>') 
+    ) : null );
+
+    
+
+      props.pins.outdoorpoolData.forEach((pin) =>
+      (pin) ? 
+      markers.addLayer(L.marker([pin.lat, pin.lon],{icon: iconOutDoorPool}).bindTooltip('<b>' + fixUndefined(pin.Name) + ' Outdoor Pool</b><p><b>Location: </b>' + fixUndefined(pin.Location) +'</p><p><b>Size: </b>' + fixUndefined(pin.Size) + '</p>') 
     ) : null );
 
      // Add our marker cluster layer to the map
