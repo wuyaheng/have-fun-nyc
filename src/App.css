@@ -11,11 +11,11 @@ body {
   
 
   #map-container {
-    height: 550px;
+    height: 540px;
   }
 
   #mapid {
-    height: 550px;
+    height: 540px;
   }
   
   .leaflet-popup-content {
@@ -98,9 +98,9 @@ body {
     overflow-x: none !important;
 }
 
-canvas {
+/* canvas {
   height: 325px !important;
-}
+} */
 
 
 

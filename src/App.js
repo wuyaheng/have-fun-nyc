@@ -135,7 +135,7 @@ class App extends Component {
       <ChooseNTA results={this.state.nta} handleInputChange={this.handleInputChange} /> 
         <div className="row mb-0">
         <div className="col-md-12">
-        <div className="card">
+        <div className="card mb-2">
         <MapBox results = {data}/>
           </div>
         </div>
